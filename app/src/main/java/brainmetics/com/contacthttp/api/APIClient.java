@@ -32,7 +32,7 @@ public class APIClient {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.164:8080")
+                .baseUrl("https://contact-svr.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
