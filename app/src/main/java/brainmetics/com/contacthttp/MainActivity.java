@@ -1,9 +1,13 @@
 package brainmetics.com.contacthttp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -65,5 +69,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadAllContact();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuAdd:
+                Intent intent = new Intent(this,InputActivity.class);
+                startActivity(intent);
+                break;
+            default: break;
+        }
+        return true;
     }
 }
