@@ -274,4 +274,43 @@ public class DetailActivity extends AppCompatActivity
     }
 
 
+    @OnClick(R.id.btnSimpan)
+    public void btnSimpanOnClick(){
+        if(validate()) {
+            cp.setFullName(txtFullname.getText().toString().trim());
+            cp.setPhone(txtPhone.getText().toString().trim());
+            cp.setEmail(txtEmail.getText().toString().trim());
+            cp.setAddress(txtAddress.getText().toString().trim());
+            if (bitmap != null) {
+                cp.setPhoto(encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 80));
+            } else {
+                cp.setPhoto("");
+            }
+            save(cp);
+        }
+    }
+
+    private void save(ContactPerson cp){
+        final ProgressDialog pd = ProgressDialog.show(this,"","Loading..",false);
+        Call<ContactPerson> call = contactPersonInterface.save(cp);
+        call.enqueue(new Callback<ContactPerson>() {
+            @Override
+            public void onResponse(Call<ContactPerson> call, Response<ContactPerson> response) {
+                pd.dismiss();
+                txtFullname.setText("");
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAddress.setText("");
+                Toast.makeText(DetailActivity.this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<ContactPerson> call, Throwable t) {
+                pd.dismiss();
+                Log.e("ERROR",t.getMessage());
+                call.cancel();
+            }
+        });
+    }
 }

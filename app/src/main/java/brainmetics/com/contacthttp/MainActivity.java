@@ -3,6 +3,7 @@ package brainmetics.com.contacthttp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -24,14 +25,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements  SwipeRefreshLayout.OnRefreshListener{
 
     @BindView(R.id.listContact)
     ListView listContact;
 
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     List<ContactPerson> contacts = new ArrayList<ContactPerson>();
 
     ContactPersonInterface contactPersonInterface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         contactPersonInterface =
                 APIClient.getClient().create(ContactPersonInterface.class);
         registerForContextMenu(listContact);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
     }
 
     private void loadAllContact(){
@@ -54,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 listContact.setAdapter
                         (new ContactAdapter(MainActivity.this,contacts));
                 pd.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -69,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadAllContact();
+        //loadAllContact();
     }
 
     @Override
@@ -97,5 +106,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,DetailActivity.class);
         intent.putExtra("ID", cp.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        loadAllContact();
     }
 }
