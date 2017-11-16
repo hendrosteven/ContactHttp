@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
                 APIClient.getClient().create(ContactPersonInterface.class);
         registerForContextMenu(listContact);
         swipeRefreshLayout.setOnRefreshListener(this);
-
+        loadAllContact();
     }
 
     private void loadAllContact(){
