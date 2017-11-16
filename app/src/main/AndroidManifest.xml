@@ -23,8 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InputActivity" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".InputActivity"
+            android:label="Input Contact"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DetailActivity"
+            android:label="Detail Contact"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ import brainmetics.com.contacthttp.api.ContactPersonInterface;
 import brainmetics.com.contacthttp.domain.ContactPerson;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,5 +89,13 @@ public class MainActivity extends AppCompatActivity {
             default: break;
         }
         return true;
+    }
+
+    @OnItemClick(R.id.listContact)
+    public void setListContactOnClick(int position){
+        ContactPerson cp = (ContactPerson)listContact.getItemAtPosition(position);
+        Intent intent = new Intent(this,DetailActivity.class);
+        intent.putExtra("ID", cp.getId());
+        startActivity(intent);
     }
 }

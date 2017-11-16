@@ -92,6 +92,10 @@ public class DetailActivity extends AppCompatActivity
         if(shouldAskPermission()){
             askPermission();
         }
+
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("ID");
+        findContactById(id);
     }
 
     private void findContactById(String id){
@@ -268,4 +272,6 @@ public class DetailActivity extends AppCompatActivity
         bitmap.recycle();
         return resizedBitmap;
     }
+
+
 }
